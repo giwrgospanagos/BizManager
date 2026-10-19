@@ -1,0 +1,88 @@
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+h1 {
+    color: #1d3557;
+}
+
+form,
+.product {
+    background: white;
+    padding: 18px;
+    margin: 14px 0;
+    border-radius: 10px;
+}
+
+input,
+button {
+    padding: 10px;
+    margin: 5px 3px;
+    border-radius: 5px;
+    border: 1px solid #cbd5e1;
+}
+
+button {
+    background: #1d3557;
+    color: white;
+    cursor: pointer;
+}
+
+.delete {
+    background: #b91c1c;
+}
+
+.product {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.details {
+    flex: 1;
+    min-width: 180px;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #00000010;
+}
+
+.stat-card h3 {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.stat-card p {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1d3557;
+    margin-bottom: 0;
+}
+
+@media (max-width: 500px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}

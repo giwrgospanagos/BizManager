@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BizManager | Αποθήκη</title>
+
+    
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+    <h1>BizManager</h1>
+    <p>Σύστημα διαχείρισης αποθήκης</p>
+
+    <div class="dashboard">
+        <div class="stat-card">
+            <h3>Συνολικά προϊόντα</h3>
+            <p>{{ stats['total_products'] }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Συνολικά τεμάχια</h3>
+            <p>{{ stats['total_units'] }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Αξία αποθέματος</h3>
+            <p>{{ "%.2f"|format(stats['stock_value']) }} €</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Χαμηλό απόθεμα</h3>
+            <p>{{ stats['low_stock'] }}</p>
+        </div>
+    </div>
+
+    <h2>Προσθήκη προϊόντος</h2>
+
+    <form action="/add-product" method="POST">
+        <input name="name" placeholder="Όνομα προϊόντος" required>
+        <input name="price" type="number" step="0.01"
+               min="0" placeholder="Τιμή (€)" required>
+        <input name="quantity" type="number" min="0"
+               step="1" placeholder="Ποσότητα" required>
+        <button type="submit">Προσθήκη</button>
+    </form>
+
+    <form action="/" method="GET">
+        <input type="text" name="search"
+               placeholder="Αναζήτηση προϊόντος..."
+               value="{{ request.args.get('search', '') }}">
+        <button type="submit">Αναζήτηση</button>
+        <a href="/">Καθαρισμός</a>
+    </form>
+
+    <h2>Αποθήκη προϊόντων ({{ products|length }})</h2>
+
+    {% for product in products %}
+    <div class="product">
+        <div class="details">
+            <strong>{{ product['name'] }}</strong><br>
+            Τιμή: {{ "%.2f"|format(product['price']) }} €<br>
+            Απόθεμα: {{ product['quantity'] }} τεμάχια
+
+            {% if product['quantity'] < 5 %}
+            <br>
+            <strong style="color: red;">
+                ⚠ Χαμηλό απόθεμα!
+            </strong>
+            {% endif %}
+        </div>
+
+        <div class="actions">
+            <a href="/edit-product/{{ product['id'] }}">
+                <button type="button">Επεξεργασία</button>
+            </a>
+
+            <form action="/delete-product/{{ product['id'] }}"
+                  method="POST"
+                  onsubmit="return confirm('Να διαγραφεί το προϊόν;')">
+                <button class="delete" type="submit">Διαγραφή</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <p>Δεν υπάρχουν προϊόντα.</p>
+    {% endfor %}
+</body>
+</html>
