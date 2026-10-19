@@ -1,5 +1,8 @@
 
+
 # BizManager
+
+**Live Demo:** [Open BizManager](https://bizmanager-hz58.onrender.com)
 
 A simple inventory management web application built with Python, Flask, and SQLite.
 
